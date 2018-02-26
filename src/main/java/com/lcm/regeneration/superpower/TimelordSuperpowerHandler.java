@@ -145,11 +145,11 @@ public class TimelordSuperpowerHandler extends SuperpowerPlayerHandler {
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-		compound = super.writeToNBT(compound);
-		compound.setInteger("regenerationsLeft", regenerationsLeft);
-		compound.setInteger("timesRegenerated", timesRegenerated);
-		compound.setBoolean("regenerating", regenerating);
-		return compound;
+		NBTTagCompound nbt = super.writeToNBT(compound);
+		nbt.setInteger("regenerationsLeft", regenerationsLeft);
+		nbt.setInteger("timesRegenerated", timesRegenerated);
+		nbt.setBoolean("regenerating", regenerating);
+		return nbt;
 	}
 	
 	@Override
