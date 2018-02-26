@@ -49,7 +49,7 @@ public class Regeneration {
 	
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent e) {
-		CmdRegenDebug.initSkin();
+		//CmdRegenDebug.initSkin();
 	}
 	
 	@EventHandler

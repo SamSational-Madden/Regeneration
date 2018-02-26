@@ -25,6 +25,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -33,6 +34,7 @@ import java.util.stream.Collectors;
 public class TimelordSuperpowerHandler extends SuperpowerPlayerHandler {
 	public int regenerationsLeft = RegenConfig.regenCapacity, timesRegenerated, regenTicks;
 	public boolean regenerating = false;
+	public TimelordSkin skin;
 	
 	public TimelordSuperpowerHandler(ISuperpowerCapability cap, Superpower superpower) {
 		super(cap, superpower);
@@ -103,12 +105,19 @@ public class TimelordSuperpowerHandler extends SuperpowerPlayerHandler {
 		SuperpowerHandler.syncToAll(this.getPlayer());
 	}
 	
-	protected static void randomizeTraits(SuperpowerPlayerHandler handler) {
+	private static void randomizeTraits(TimelordSuperpowerHandler handler) {
+		try {
+			handler.skin = new TimelordSkin();
+		} catch (IOException e) {
+			//STUB empty catch block
+			e.printStackTrace();
+		}
+		
 		//Reset Karma
 		if (LCConfig.modules.karma) for (KarmaStat karmaStat : KarmaStat.getKarmaStats())
 			KarmaHandler.setKarmaStat(handler.getPlayer(), karmaStat, 0);
-		if (RegenConfig.disableTraits) return;
 		
+		if (RegenConfig.disableTraits) return;
 		handler.getAbilities().forEach(ability -> ability.setUnlocked(false));
 		
 		for (int i = 0; i < 2; i++) {
@@ -149,6 +158,7 @@ public class TimelordSuperpowerHandler extends SuperpowerPlayerHandler {
 		nbt.setInteger("regenerationsLeft", regenerationsLeft);
 		nbt.setInteger("timesRegenerated", timesRegenerated);
 		nbt.setBoolean("regenerating", regenerating);
+		nbt.setTag("skin", skin.asNBT());
 		return nbt;
 	}
 	
@@ -158,6 +168,12 @@ public class TimelordSuperpowerHandler extends SuperpowerPlayerHandler {
 		regenerationsLeft = compound.getInteger("regenerationsLeft");
 		timesRegenerated = compound.getInteger("timesRegenerated");
 		regenerating = compound.getBoolean("regenerating");
+		try {
+			skin = new TimelordSkin(compound.getCompoundTag("skin"));
+		} catch (IOException e) {
+			//STUB empty catch block
+			e.printStackTrace();
+		}
 		
 		ArrayList<Ability> abilities = new ArrayList<>();
 		abilities.addAll(getAbilities());

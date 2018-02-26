@@ -1,9 +1,13 @@
 package com.lcm.regeneration.superpower;
 
 import java.awt.Color;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 import com.lcm.regeneration.Regeneration;
 import com.lcm.regeneration.util.LimbManipulationUtil;
+import com.lcm.regeneration.util.PlayerUtils;
 
 import lucraft.mods.lucraftcore.superpowers.Superpower;
 import lucraft.mods.lucraftcore.superpowers.SuperpowerHandler;
@@ -18,6 +22,7 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
+import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -31,10 +36,11 @@ import net.minecraftforge.fml.relauncher.Side;
 /** Created by AFlyingGrayson on 8/7/17 */
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class TimelordRenderHandler implements SuperpowerRenderer.ISuperpowerRenderer {
-	
 	private static final ModelPlayer playerModelLargeArms = new ModelPlayer(0.1F, false);
 	private static final ModelPlayer playerModelSmallArms = new ModelPlayer(0.1F, true);
 	private static final ResourceLocation REGEN_TEXTURE = new ResourceLocation(Regeneration.MODID, "textures/entity/regen.png");
+	
+	private Map<UUID, ResourceLocation> skins = new HashMap<>();
 	
 	static {
 		LimbManipulationUtil.getLimbManipulator(playerModelLargeArms, LimbManipulationUtil.Limb.LEFT_ARM).setAngles(0, 0, -75);
@@ -48,6 +54,12 @@ public class TimelordRenderHandler implements SuperpowerRenderer.ISuperpowerRend
 	@Override
 	public void onRenderPlayer(RenderLivingBase<?> renderLivingBase, Minecraft minecraft, EntityPlayer entityPlayer, Superpower superpower, SuperpowerPlayerHandler superpowerPlayerHandler, float v, float v1, float v2, float v3, float v4, float v5, float v6) {
 		TimelordSuperpowerHandler handler = (TimelordSuperpowerHandler) superpowerPlayerHandler;
+
+		if (skins.containsKey(entityPlayer.getGameProfile().getId())) {
+			PlayerUtils.setPlayerTexture((AbstractClientPlayer)entityPlayer, skins.get(entityPlayer.getGameProfile().getId()));
+		} else {
+			skins.put(entityPlayer.getGameProfile().getId(), generateSkin(handler.skin));
+		}
 		
 		if (!(handler.regenTicks > 0 && handler.regenTicks < 200)) return;
 		
@@ -59,6 +71,10 @@ public class TimelordRenderHandler implements SuperpowerRenderer.ISuperpowerRend
 			renderEffect(renderLivingBase, minecraft, entityPlayer, superpower, superpowerPlayerHandler, v, v1, v2, v3, v4, v5, v6);
 	}
 	
+	private ResourceLocation generateSkin(TimelordSkin skin) {
+		return Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation("skin-"+skin.hashCode(), new DynamicTexture(skin.compiled));
+	}
+
 	private void renderTexturedEffect(RenderLivingBase<?> renderLivingBase, Minecraft minecraft, EntityPlayer entityPlayer, Superpower superpower, SuperpowerPlayerHandler superpowerPlayerHandler, float v, float v1, float v2, float v3, float v4, float v5, float v6) {
 		
 		TimelordSuperpowerHandler handler = (TimelordSuperpowerHandler) superpowerPlayerHandler;
