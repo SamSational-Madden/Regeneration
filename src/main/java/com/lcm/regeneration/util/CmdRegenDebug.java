@@ -1,5 +1,6 @@
 package com.lcm.regeneration.util;
 
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -65,13 +66,36 @@ public class CmdRegenDebug extends CommandBase {
 	
 	public static void initSkin() {
 		try {
-			File f = new File("random.jpg");
-			//System.out.println(f.getAbsolutePath());
-			BufferedImage img = ImageIO.read(f);
+			//File f = new File("random.jpg");
+			//BufferedImage img = ImageIO.read(f);
+			
+			BufferedImage img = combineImages(
+				getLayer("skin"), getLayer("hair"), getLayer("eyes"), getLayer("brows") 
+			);
+			
 			CmdRegenDebug.skin = Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation("skin", new DynamicTexture(img));
-		} catch (IOException e1) {
-			e1.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(1);
 		}
+	}
+	
+	private static BufferedImage getLayer(String name) throws IOException {
+		System.out.println(new File("skins/"+name+".png").getAbsolutePath());
+		return ImageIO.read(new File("skins/"+name+".png"));
+	}
+	
+	private static BufferedImage combineImages(BufferedImage... img) {
+		int w = 0, h = 0;
+		for (BufferedImage i : img) { //TODO could probably throw a warning if sizes change
+			w = Math.max(w, i.getWidth());
+			h = Math.max(h, i.getHeight());
+		}
+		
+		BufferedImage merged = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+		Graphics g = merged.getGraphics();
+		for (BufferedImage i : img) g.drawImage(i, 0, 0, null);
+		return merged;
 	}
 	
 }
