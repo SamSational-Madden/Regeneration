@@ -110,9 +110,7 @@ public class TimelordSuperpowerHandler extends SuperpowerPlayerHandler {
 		try {
 			handler.skin = new TimelordSkin();
 		} catch (IOException e) {
-			//STUB empty catch block
-			e.printStackTrace();
-			for (int i=0; i<20; i++) System.out.println();
+			throw new RuntimeException("Something went wrong with selecting skin files", e);
 		}
 		
 		((TimelordRenderHandler)handler.superpower.getPlayerRenderer()).resetSkin(handler.getPlayer().getGameProfile().getId());
@@ -171,9 +169,7 @@ public class TimelordSuperpowerHandler extends SuperpowerPlayerHandler {
 		try {
 			skin = new TimelordSkin(compound.getCompoundTag("skin"));
 		} catch (IOException e) {
-			//STUB empty catch block
-			e.printStackTrace();
-			for (int i=0; i<20; i++) System.out.println();
+			throw new RuntimeException("Something went wrong with selecting skin files", e);
 		}
 		
 		super.readFromNBT(compound);

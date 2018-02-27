@@ -24,7 +24,7 @@ public class PlayerUtils {
 	
 	public static Map<Type, ResourceLocation> getSkinMap(AbstractClientPlayer player) {
 		NetworkPlayerInfo playerInfo = getNetworkPlayerInfo(player);
-		if (playerInfo == null) return null; // XXX NPE?
+		if (playerInfo == null) throw new NullPointerException("No skin-map found for player "+player.getName());
 		return ObfuscationReflectionHelper.getPrivateValue(NetworkPlayerInfo.class, playerInfo, 1);
 	}
 	

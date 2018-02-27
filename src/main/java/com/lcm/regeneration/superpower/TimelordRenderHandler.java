@@ -60,10 +60,8 @@ public class TimelordRenderHandler implements SuperpowerRenderer.ISuperpowerRend
 		TimelordSuperpowerHandler handler = (TimelordSuperpowerHandler) superpowerPlayerHandler;
 		
 		if (skins.containsKey(entityPlayer.getGameProfile().getId())) {
-			System.out.println("Re-using cache");
 			PlayerUtils.setPlayerTexture((AbstractClientPlayer)entityPlayer, skins.get(entityPlayer.getGameProfile().getId()));
 		} else {
-			System.out.println("Regenerating dyntex");
 			skins.put(entityPlayer.getGameProfile().getId(), generateSkin(handler.skin));
 		}
 		

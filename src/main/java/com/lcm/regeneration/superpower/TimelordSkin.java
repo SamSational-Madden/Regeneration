@@ -22,16 +22,14 @@ public final class TimelordSkin {
 	public final BufferedImage compiled;
 	private final GENDER sex;
 	private final HAIRCOLOR hairColor;
-	private final boolean hasBeard, hasHeterochemia, isSpecial; //TODO assert sex == MALE || (sex == FEMALE && hasBeard == false)
+	private final boolean hasHeterochemia, isSpecial;//, hasBeard; 
 	private final int iBeard, iBrow, iEyes, iHair, iMouth, iSkin, iSpecial;
 	
 	public TimelordSkin() throws IOException { //TODO configurable chances
-		System.out.println("\n\n\n\n\n\nREGENERATING SKINS\n\n\n\n\n");
-		
 		isSpecial = Math.random() < .01D;
 		//sex = Math.random() < .5D ? GENDER.MALE : GENDER.FEMALE; //TODO selecting a gender
 		sex = GENDER.MALE;
-		hasBeard = sex == GENDER.MALE ? Math.random() < .3D : false;
+		//hasBeard = sex == GENDER.MALE ? Math.random() < .3D : false;
 		hasHeterochemia = Math.random() < .01D;
 		
 		Random r = new Random();
@@ -65,7 +63,7 @@ public final class TimelordSkin {
 		NBTTagCompound nbt = tag.getSize() == 0 ? new TimelordSkin().asNBT() : tag;
 		
 		sex				=	nbt.getBoolean("isFemale") ? GENDER.FEMALE : GENDER.MALE;
-		hasBeard		=	nbt.getBoolean("hasBeard");
+		//hasBeard		=	nbt.getBoolean("hasBeard");
 		hasHeterochemia	=	nbt.getBoolean("hasHeterochemia");
 		isSpecial		=	nbt.getBoolean("isSpecial");
 		
@@ -88,7 +86,7 @@ public final class TimelordSkin {
 	public NBTTagCompound asNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setBoolean("isFemale", sex == GENDER.FEMALE);
-		nbt.setBoolean("hasBeard", hasBeard);
+		//nbt.setBoolean("hasBeard", hasBeard);
 		nbt.setBoolean("hasHeterochemia", hasHeterochemia);
 		nbt.setBoolean("isSpecial", isSpecial);
 		
@@ -108,7 +106,8 @@ public final class TimelordSkin {
 		if (layers.length == 0) return null; //this may be bad but I'm lazy
 		
 		int w = 0, h = 0;
-		for (BufferedImage i : layers) if (i != null) { //TODO could probably throw a warning if sizes change
+		for (BufferedImage i : layers) if (i != null) {
+			if ((w != 0 && h != 0) && (i.getWidth() != w || i.getHeight() != h)) System.out.println("WARNING: SKIN LAYERS ARE NOT A UNIFORM SIZE");
 			w = Math.max(w, i.getWidth());
 			h = Math.max(h, i.getHeight());
 		}
@@ -144,13 +143,11 @@ public final class TimelordSkin {
 		}
 	}
 
-	//TODO regenerate
 	@Override @Generated("eclipse")
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((hairColor == null) ? 0 : hairColor.hashCode());
-		result = prime * result + (hasBeard ? 1231 : 1237);
 		result = prime * result + (hasHeterochemia ? 1231 : 1237);
 		result = prime * result + iBeard;
 		result = prime * result + iBrow;
@@ -171,7 +168,6 @@ public final class TimelordSkin {
 		if (!(obj instanceof TimelordSkin)) return false;
 		TimelordSkin other = (TimelordSkin) obj;
 		if (hairColor != other.hairColor) return false;
-		if (hasBeard != other.hasBeard) return false;
 		if (hasHeterochemia != other.hasHeterochemia) return false;
 		if (iBeard != other.iBeard) return false;
 		if (iBrow != other.iBrow) return false;
@@ -184,4 +180,5 @@ public final class TimelordSkin {
 		if (sex != other.sex) return false;
 		return true;
 	}
+	
 }
