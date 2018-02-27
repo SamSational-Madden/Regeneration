@@ -140,7 +140,7 @@ public final class TimelordSkin {
 							eyes = getLayer("eyes", iEyes),
 							brow = getLayer("brow", iBrow),
 							beard = getLayer("beard", iBeard);
-			return compileLayers(skin, mouth, hair, eyes, brow, beard);
+			return compileLayers(skin, mouth, hair, eyes, brow);//, beard);
 		}
 	}
 
