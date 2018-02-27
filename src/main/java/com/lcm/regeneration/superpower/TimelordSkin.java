@@ -58,19 +58,21 @@ public final class TimelordSkin {
 	
 	
 	public TimelordSkin(NBTTagCompound tag) throws IOException {
-		sex				=	tag.getBoolean("isFemale") ? GENDER.FEMALE : GENDER.MALE;
-		hasBeard		=	tag.getBoolean("hasBeard");
-		hasHeterochemia	=	tag.getBoolean("hasHeterochemia");
-		isSpecial		=	tag.getBoolean("isSpecial");
+		NBTTagCompound nbt = tag.getSize() == 0 ? new TimelordSkin().asNBT() : tag;
 		
-		iBeard		=	tag.getInteger("iBeard");
-		iBrow		=	tag.getInteger("iBrow");
-		iEyes		=	tag.getInteger("iEyes");
-		iHair		=	tag.getInteger("iHair");
-		hairColor	=	HAIRCOLOR.values()[tag.getInteger("iHairColor")];
-		iMouth		=	tag.getInteger("iMouth");
-		iSkin		=	tag.getInteger("iSkin");
-		iSpecial	=	tag.getInteger("iSpecial");
+		sex				=	nbt.getBoolean("isFemale") ? GENDER.FEMALE : GENDER.MALE;
+		hasBeard		=	nbt.getBoolean("hasBeard");
+		hasHeterochemia	=	nbt.getBoolean("hasHeterochemia");
+		isSpecial		=	nbt.getBoolean("isSpecial");
+		
+		iBeard		=	nbt.getInteger("iBeard");
+		iBrow		=	nbt.getInteger("iBrow");
+		iEyes		=	nbt.getInteger("iEyes");
+		iHair		=	nbt.getInteger("iHair");
+		hairColor	=	HAIRCOLOR.values()[nbt.getInteger("iHairColor")];
+		iMouth		=	nbt.getInteger("iMouth");
+		iSkin		=	nbt.getInteger("iSkin");
+		iSpecial	=	nbt.getInteger("iSpecial");
 		
 		if (hasHeterochemia && iEyes != 0)
 			throw new MalformedAttributeException("Something went wrong while (de)serializing: hasHeterochemia but iEyes != 0");
