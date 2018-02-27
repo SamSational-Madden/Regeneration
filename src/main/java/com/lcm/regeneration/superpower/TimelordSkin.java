@@ -15,7 +15,9 @@ import com.lcm.regeneration.Regeneration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
-import scala.xml.MalformedAttributeException;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Immutable //technically not 100%, 'compiled' *could possibly* be modified
 public final class TimelordSkin {
@@ -44,7 +46,7 @@ public final class TimelordSkin {
 		iSkin		= r.nextInt(6)+1;
 		iSpecial	= r.nextInt(1)+1;
 		
-		compiled = compile();
+		compiled = compile(this);
 	}
 	
 	
@@ -77,18 +79,18 @@ public final class TimelordSkin {
 		iSpecial	=	nbt.getInteger("iSpecial");
 		
 		if (hasHeterochemia && iEyes != 0)
-			throw new MalformedAttributeException("Something went wrong while (de)serializing: hasHeterochemia but iEyes != 0");
+			throw new IllegalStateException("Something went wrong while (de)serializing: hasHeterochemia but iEyes != 0\n"+nbt.toString());
 		if (iEyes == 0 && !hasHeterochemia)
-			throw new MalformedAttributeException("Something went wrong while (de)serializing: !hasHeterochemia but iEyes == 0");
+			throw new IllegalStateException("Something went wrong while (de)serializing: !hasHeterochemia but iEyes == 0\n"+nbt.toString());
 		
-		compiled = compile();
+		compiled = compile(this);
 	}
 	
 	/** Fallback skin */
 	public TimelordSkin(boolean ignored) throws IOException {
 		sex = GENDER.FEMALE;
 		hairColor = HAIRCOLOR.GINGER;
-		hasHeterochemia = true;
+		hasHeterochemia = false;
 		isSpecial = true; 
 		iBeard = -1;
 		iBrow = -1;
@@ -97,7 +99,7 @@ public final class TimelordSkin {
 		iMouth = -1;
 		iSkin = -1;
 		iSpecial = 0;
-		compiled = compile(); //null
+		compiled = compile(this); //null
 		if (compiled != null) throw new IllegalStateException("compiled != null with the fallback constructor");
 	}
 	
@@ -147,19 +149,40 @@ public final class TimelordSkin {
 		return ImageIO.read(getInternalFileStream("skins/"+layer+"/"+category.toString()+"/"+index+".png"));
 	}
 	
-	private BufferedImage compile() throws IOException {
-		if (isSpecial) {
-			if (iSpecial == 0) return null;
-			return ImageIO.read(getInternalFileStream("skins/special/"+iSpecial+".png"));
+	@SideOnly(Side.CLIENT)
+	public static BufferedImage compile(TimelordSkin skin) throws IOException {
+		if (skin.isSpecial) {
+			if (skin.iSpecial == 0) return null;
+			return ImageIO.read(getInternalFileStream("skins/special/"+skin.iSpecial+".png"));
 		} else {
-			BufferedImage skin = getLayer("skin", sex, iSkin),
-							mouth = getLayer("mouth", sex, iMouth),
-							hair = getLayer("hair", sex.toString()+"/"+hairColor.toString(), iHair),
-							eyes = getLayer("eyes", iEyes),
-							brow = getLayer("brow", iBrow),
-							beard = getLayer("beard", iBeard);
-			return compileLayers(skin, mouth, hair, eyes, brow);//, beard);
+			BufferedImage lSkin = getLayer("skin", skin.sex, skin.iSkin),
+							mouth = getLayer("mouth", skin.sex, skin.iMouth),
+							hair = getLayer("hair", skin.sex.toString()+"/"+skin.hairColor.toString(), skin.iHair),
+							eyes = getLayer("eyes", skin.iEyes),
+							brow = getLayer("brow", skin.iBrow),
+							beard = getLayer("beard", skin.iBeard);
+			return compileLayers(lSkin, mouth, hair, eyes, brow);//, beard);
 		}
+	}
+	
+	/** Copy the passed TimelordSkin and compile it */
+	@SideOnly(Side.CLIENT)
+	public TimelordSkin(TimelordSkin skin) throws IOException {
+		sex				=	skin.sex;
+		//hasBeard		=	skin.hasBeard;
+		hasHeterochemia	=	skin.hasHeterochemia;
+		isSpecial		=	skin.isSpecial;
+		
+		iBeard		=	skin.iBeard;
+		iBrow		=	skin.iBrow;
+		iEyes		=	skin.iEyes;
+		iHair		=	skin.iHair;
+		hairColor	=	skin.hairColor;
+		iMouth		=	skin.iMouth;
+		iSkin		=	skin.iSkin;
+		iSpecial	=	skin.iSpecial;
+		
+		compiled = compile(this);
 	}
 
 	
@@ -199,6 +222,11 @@ public final class TimelordSkin {
 		if (isSpecial != other.isSpecial) return false;
 		if (sex != other.sex) return false;
 		return true;
+	}
+
+	@Override @Generated("eclipse")
+	public String toString() {
+		return "{sex=" + sex + ", hairColor=" + hairColor + ", hasHeterochemia=" + hasHeterochemia + ", isSpecial=" + isSpecial + ", iBeard=" + iBeard + ", iBrow=" + iBrow + ", iEyes=" + iEyes + ", iHair=" + iHair + ", iMouth=" + iMouth + ", iSkin=" + iSkin + ", iSpecial=" + iSpecial + "}";
 	}
 	
 }

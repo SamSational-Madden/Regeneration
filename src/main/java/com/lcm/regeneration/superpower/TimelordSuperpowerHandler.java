@@ -106,6 +106,7 @@ public class TimelordSuperpowerHandler extends SuperpowerPlayerHandler {
 		SuperpowerHandler.syncToAll(this.getPlayer());
 	}
 	
+	//TODO privatise again?
 	public static void randomize(TimelordSuperpowerHandler handler) {
 		if (handler.getPlayer().world.isRemote) try {
 			handler.skin = new TimelordSkin();

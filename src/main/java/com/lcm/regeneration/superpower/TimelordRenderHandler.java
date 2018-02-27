@@ -1,6 +1,7 @@
 package com.lcm.regeneration.superpower;
 
 import java.awt.Color;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -62,6 +63,9 @@ public class TimelordRenderHandler implements SuperpowerRenderer.ISuperpowerRend
 		if (skins.containsKey(entityPlayer.getGameProfile().getId())) {
 			PlayerUtils.setPlayerTexture((AbstractClientPlayer)entityPlayer, skins.get(entityPlayer.getGameProfile().getId()));
 		} else {
+			if (handler.skin.compiled == null) try {
+				handler.skin = new TimelordSkin(handler.skin);
+			} catch (IOException e) { throw new RuntimeException("Could not generate skin", e); }
 			skins.put(entityPlayer.getGameProfile().getId(), generateSkin(handler.skin));
 		}
 		
