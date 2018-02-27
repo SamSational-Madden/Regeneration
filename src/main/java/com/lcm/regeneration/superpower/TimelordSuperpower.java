@@ -32,7 +32,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TimelordSuperpower extends Superpower {
 	
 	public static final TimelordSuperpower INSTANCE = new TimelordSuperpower();
-	private TimelordRenderHandler timelordRenderhandler;
+	private TimelordRenderHandler renderHandler;
 	
 	public TimelordSuperpower() {
 		super(StringHelper.translateToLocal("superpower.Timelord.name"));
@@ -79,8 +79,8 @@ public class TimelordSuperpower extends Superpower {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public SuperpowerRenderer.ISuperpowerRenderer getPlayerRenderer() {
-		if (timelordRenderhandler == null) timelordRenderhandler = new TimelordRenderHandler();
-		return timelordRenderhandler;
+		if (renderHandler == null) renderHandler = new TimelordRenderHandler();
+		return renderHandler;
 	}
 	
 	@Override
