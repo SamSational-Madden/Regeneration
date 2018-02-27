@@ -114,10 +114,10 @@ public final class TimelordSkin {
 	}
 	
 	private static BufferedImage getLayer(String layer, int index) throws IOException {
-		return ImageIO.read(TimelordSkin.class.getResourceAsStream("assets/lcm-regen/skins/"+layer+"/"+index+".png"));
+		return ImageIO.read(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(Regeneration.MODID+":assets/lcm-regen/skins/"+layer+"/"+index+".png")).getInputStream());
 	}
 	private static BufferedImage getLayer(String layer, Object category, int index) throws IOException {
-		return ImageIO.read(TimelordSkin.class.getResourceAsStream("assets/lcm-regen/skins/"+layer+"/"+category.toString()+"/"+index+".png"));
+		return ImageIO.read(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(Regeneration.MODID+":assets/lcm-regen/skins/"+layer+"/"+category.toString()+"/"+index+".png")).getInputStream());
 	}
 	
 	
