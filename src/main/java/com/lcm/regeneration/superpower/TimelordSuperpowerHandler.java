@@ -164,16 +164,17 @@ public class TimelordSuperpowerHandler extends SuperpowerPlayerHandler {
 	
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
-		super.readFromNBT(compound);
-		regenerationsLeft = compound.getInteger("regenerationsLeft");
-		timesRegenerated = compound.getInteger("timesRegenerated");
-		regenerating = compound.getBoolean("regenerating");
 		try {
 			skin = new TimelordSkin(compound.getCompoundTag("skin"));
 		} catch (IOException e) {
 			//STUB empty catch block
 			e.printStackTrace();
 		}
+		
+		super.readFromNBT(compound);
+		regenerationsLeft = compound.getInteger("regenerationsLeft");
+		timesRegenerated = compound.getInteger("timesRegenerated");
+		regenerating = compound.getBoolean("regenerating");
 		
 		ArrayList<Ability> abilities = new ArrayList<>();
 		abilities.addAll(getAbilities());
