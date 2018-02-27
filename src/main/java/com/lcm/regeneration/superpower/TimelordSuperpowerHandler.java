@@ -107,7 +107,7 @@ public class TimelordSuperpowerHandler extends SuperpowerPlayerHandler {
 	}
 	
 	public static void randomize(TimelordSuperpowerHandler handler) {
-		try {
+		if (handler.getPlayer().world.isRemote) try {
 			handler.skin = new TimelordSkin();
 		} catch (IOException e) {
 			throw new RuntimeException("Something went wrong with selecting skin files", e);
@@ -167,7 +167,8 @@ public class TimelordSuperpowerHandler extends SuperpowerPlayerHandler {
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		try {
-			skin = new TimelordSkin(compound.getCompoundTag("skin"));
+			if (this.getPlayer().world.isRemote) skin = new TimelordSkin(compound.getCompoundTag("skin"));
+			else skin = new TimelordSkin(true);
 		} catch (IOException e) {
 			throw new RuntimeException("Something went wrong with selecting skin files", e);
 		}

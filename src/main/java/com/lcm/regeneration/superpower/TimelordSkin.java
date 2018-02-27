@@ -83,6 +83,22 @@ public final class TimelordSkin {
 		compiled = compile();
 	}
 	
+	/** Fallback skin */
+	public TimelordSkin(boolean ignored) throws IOException {
+		sex = GENDER.FEMALE;
+		hairColor = HAIRCOLOR.GINGER;
+		hasHeterochemia = true;
+		isSpecial = true; 
+		iBeard = -1;
+		iBrow = -1;
+		iEyes = -1;
+		iHair = -1;
+		iMouth = -1;
+		iSkin = -1;
+		iSpecial = 0;
+		compiled = compile();
+	}
+	
 	public NBTTagCompound asNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setBoolean("isFemale", sex == GENDER.FEMALE);
@@ -143,6 +159,7 @@ public final class TimelordSkin {
 		}
 	}
 
+	
 	@Override @Generated("eclipse")
 	public int hashCode() {
 		final int prime = 31;
