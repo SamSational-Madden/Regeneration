@@ -109,11 +109,10 @@ public class TimelordSuperpowerHandler extends SuperpowerPlayerHandler {
 	public static void randomize(TimelordSuperpowerHandler handler) {
 		if (handler.getPlayer().world.isRemote) try {
 			handler.skin = new TimelordSkin();
+			((TimelordRenderHandler)handler.superpower.getPlayerRenderer()).resetSkin(handler.getPlayer().getGameProfile().getId());
 		} catch (IOException e) {
 			throw new RuntimeException("Something went wrong with selecting skin files", e);
 		}
-		
-		((TimelordRenderHandler)handler.superpower.getPlayerRenderer()).resetSkin(handler.getPlayer().getGameProfile().getId());
 		
 		//Reset Karma
 		if (LCConfig.modules.karma) for (KarmaStat karmaStat : KarmaStat.getKarmaStats())
