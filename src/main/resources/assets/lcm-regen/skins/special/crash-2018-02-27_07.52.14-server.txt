@@ -1,0 +1,83 @@
+---- Minecraft Crash Report ----
+
+WARNING: coremods are present:
+  LucraftCoreCoreMod (LucraftCore-1.12.2-2.0.5.jar)
+Contact their authors BEFORE contacting forge
+
+// Who set us up the TNT?
+
+Time: 27/02/18 07:52
+Description: Exception in server tick loop
+
+java.lang.NoClassDefFoundError: net/minecraft/client/Minecraft
+	at com.lcm.regeneration.superpower.TimelordSkin.getInternalFileStream(TimelordSkin.java:138)
+	at com.lcm.regeneration.superpower.TimelordSkin.compile(TimelordSkin.java:150)
+	at com.lcm.regeneration.superpower.TimelordSkin.<init>(TimelordSkin.java:99)
+	at com.lcm.regeneration.superpower.TimelordSuperpowerHandler.readFromNBT(TimelordSuperpowerHandler.java:171)
+	at lucraft.mods.lucraftcore.superpowers.capabilities.CapabilitySuperpower.loadSuperpowerHandler(CapabilitySuperpower.java:202)
+	at lucraft.mods.lucraftcore.superpowers.capabilities.CapabilitySuperpower$CapabilitySuperpowerEventHandler.onEntityJoinWorld(CapabilitySuperpower.java:287)
+	at net.minecraftforge.fml.common.eventhandler.ASMEventHandler_86_CapabilitySuperpowerEventHandler_onEntityJoinWorld_EntityJoinWorldEvent.invoke(.dynamic)
+	at net.minecraftforge.fml.common.eventhandler.ASMEventHandler.invoke(ASMEventHandler.java:90)
+	at net.minecraftforge.fml.common.eventhandler.EventBus.post(EventBus.java:179)
+	at net.minecraft.world.World.func_72838_d(World.java:1205)
+	at net.minecraft.world.WorldServer.func_72838_d(WorldServer.java:1057)
+	at net.minecraft.server.management.PlayerList.func_72377_c(PlayerList.java:376)
+	at net.minecraft.server.management.PlayerList.initializeConnectionToPlayer(PlayerList.java:165)
+	at net.minecraftforge.fml.common.network.handshake.NetworkDispatcher.completeServerSideConnection(NetworkDispatcher.java:256)
+	at net.minecraftforge.fml.common.network.handshake.NetworkDispatcher.access$100(NetworkDispatcher.java:72)
+	at net.minecraftforge.fml.common.network.handshake.NetworkDispatcher$1.func_73660_a(NetworkDispatcher.java:205)
+	at net.minecraft.network.NetworkManager.func_74428_b(NetworkManager.java:285)
+	at net.minecraft.network.NetworkSystem.func_151269_c(NetworkSystem.java:180)
+	at net.minecraft.server.MinecraftServer.func_71190_q(MinecraftServer.java:788)
+	at net.minecraft.server.dedicated.DedicatedServer.func_71190_q(DedicatedServer.java:396)
+	at net.minecraft.server.MinecraftServer.func_71217_p(MinecraftServer.java:666)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:524)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.ClassNotFoundException: net.minecraft.client.Minecraft
+	at net.minecraft.launchwrapper.LaunchClassLoader.findClass(LaunchClassLoader.java:191)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	... 23 more
+Caused by: net.minecraftforge.fml.common.asm.ASMTransformerWrapper$TransformerException: Exception in class transformer net.minecraftforge.fml.common.asm.transformers.SideTransformer@50cf5a23 from coremod FMLCorePlugin
+	at net.minecraftforge.fml.common.asm.ASMTransformerWrapper$TransformerWrapper.transform(ASMTransformerWrapper.java:262)
+	at net.minecraft.launchwrapper.LaunchClassLoader.runTransformers(LaunchClassLoader.java:279)
+	at net.minecraft.launchwrapper.LaunchClassLoader.findClass(LaunchClassLoader.java:176)
+	... 25 more
+Caused by: java.lang.RuntimeException: Attempted to load class bib for invalid side SERVER
+	at net.minecraftforge.fml.common.asm.transformers.SideTransformer.transform(SideTransformer.java:62)
+	at net.minecraftforge.fml.common.asm.ASMTransformerWrapper$TransformerWrapper.transform(ASMTransformerWrapper.java:258)
+	... 27 more
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- System Details --
+Details:
+	Minecraft Version: 1.12.2
+	Operating System: Linux (amd64) version 3.14.32-xxxx-std-ipv6-64-hz1000
+	Java Version: 1.8.0_141, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 208847032 bytes (199 MB) / 518979584 bytes (494 MB) up to 6227755008 bytes (5939 MB)
+	JVM Flags: 20 total; -Xincgc -XX:+UseParNewGC -XX:MaxPermSize=256M -XX:NewRatio=2 -XX:CMSFullGCsBeforeCompaction=1 -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=2048 -XX:+CMSParallelRemarkEnabled -XX:+DisableExplicitGC -Xnoclassgc -Xoss4M -Xss4M -XX:+UseFastAccessorMethods -XX:CMSInitiatingOccupancyFraction=90 -XX:UseSSE=4 -XX:+UseCMSCompactAtFullCollection -XX:ParallelGCThreads=4 -XX:+AggressiveOpts -Xmx6144M -Xms512M
+	IntCache: cache: 0, tcache: 0, allocated: 12, tallocated: 94
+	FML: MCP 9.42 Powered by Forge 14.23.2.2619 7 mods loaded, 7 mods active
+	States: 'U' = Unloaded 'L' = Loaded 'C' = Constructed 'H' = Pre-initialized 'I' = Initialized 'J' = Post-initialized 'A' = Available 'D' = Disabled 'E' = Errored
+
+	| State     | ID              | Version         | Source                                  | Signature                                |
+	|:--------- |:--------------- |:--------------- |:--------------------------------------- |:---------------------------------------- |
+	| UCHIJAAAA | minecraft       | 1.12.2          | minecraft.jar                           | None                                     |
+	| UCHIJAAAA | mcp             | 9.42            | minecraft.jar                           | None                                     |
+	| UCHIJAAAA | FML             | 8.0.99.99       | forge-1.12.2-14.23.2.2619-universal.jar | e3c3d50c7c986df74c645c0ac54639741c90a557 |
+	| UCHIJAAAA | forge           | 14.23.2.2619    | forge-1.12.2-14.23.2.2619-universal.jar | e3c3d50c7c986df74c645c0ac54639741c90a557 |
+	| UCHIJAAAA | lucraftcore     | 1.12.2-2.0.5    | LucraftCore-1.12.2-2.0.5.jar            | None                                     |
+	| UCHIJAAAA | heroesexpansion | Beta-1.12-1.1.0 | HeroesExpansion-1.12.2-1.0.0.jar        | None                                     |
+	| UCHIJAAAA | lcm-regen       | 2.0             | lcm-regen-2.0-SNAPSHOT_4e90914.jar      | None                                     |
+
+	Loaded coremods (and transformers): 
+LucraftCoreCoreMod (LucraftCore-1.12.2-2.0.5.jar)
+  lucraft.mods.lucraftcore.core.LCTransformer
+	Profiler Position: N/A (disabled)
+	Player Count: 1 / 999; [EntityPlayerMP['HydroSimp'/547, l='Minecraftyf', x=-118.92, y=36.64, z=6.52]]
+	Is Modded: Definitely; Server brand changed to 'fml,forge'
+	Type: Dedicated Server (map_server.txt)

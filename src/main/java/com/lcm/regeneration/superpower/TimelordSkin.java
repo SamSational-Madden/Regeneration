@@ -80,6 +80,7 @@ public final class TimelordSkin {
 			throw new MalformedAttributeException("Something went wrong while (de)serializing: hasHeterochemia but iEyes != 0");
 		if (iEyes == 0 && !hasHeterochemia)
 			throw new MalformedAttributeException("Something went wrong while (de)serializing: !hasHeterochemia but iEyes == 0");
+		
 		compiled = compile();
 	}
 	
@@ -96,7 +97,8 @@ public final class TimelordSkin {
 		iMouth = -1;
 		iSkin = -1;
 		iSpecial = 0;
-		compiled = compile();
+		compiled = compile(); //null
+		if (compiled != null) throw new IllegalStateException("compiled != null with the fallback constructor");
 	}
 	
 	public NBTTagCompound asNBT() {
@@ -147,6 +149,7 @@ public final class TimelordSkin {
 	
 	private BufferedImage compile() throws IOException {
 		if (isSpecial) {
+			if (iSpecial == 0) return null;
 			return ImageIO.read(getInternalFileStream("skins/special/"+iSpecial+".png"));
 		} else {
 			BufferedImage skin = getLayer("skin", sex, iSkin),
