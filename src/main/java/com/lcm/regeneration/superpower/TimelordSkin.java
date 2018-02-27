@@ -3,6 +3,7 @@ package com.lcm.regeneration.superpower;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Random;
 
 import javax.annotation.Generated;
@@ -118,17 +119,20 @@ public final class TimelordSkin {
 		return merged;
 	}
 	
-	private static BufferedImage getLayer(String layer, int index) throws IOException {
-		return ImageIO.read(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(Regeneration.MODID+":assets/lcm-regen/skins/"+layer+"/"+index+".png")).getInputStream());
-	}
-	private static BufferedImage getLayer(String layer, Object category, int index) throws IOException {
-		return ImageIO.read(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(Regeneration.MODID+":assets/lcm-regen/skins/"+layer+"/"+category.toString()+"/"+index+".png")).getInputStream());
+	private static InputStream getInternalFileStream(String name) throws IOException {
+		return Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(Regeneration.MODID+":"+name)).getInputStream();
 	}
 	
+	private static BufferedImage getLayer(String layer, int index) throws IOException {
+		return ImageIO.read(getInternalFileStream("skins/"+layer+"/"+index+".png"));
+	}
+	private static BufferedImage getLayer(String layer, Object category, int index) throws IOException {
+		return ImageIO.read(getInternalFileStream("skins/"+layer+"/"+category.toString()+"/"+index+".png"));
+	}
 	
 	private BufferedImage compile() throws IOException {
 		if (isSpecial) {
-			return ImageIO.read(getClass().getResourceAsStream("assets/lcm-regen/skins/special/"+iSpecial+".png"));
+			return ImageIO.read(getInternalFileStream("skins/special/"+iSpecial+".png"));
 		} else {
 			BufferedImage skin = getLayer("skin", sex, iSkin),
 							mouth = getLayer("mouth", sex, iMouth),

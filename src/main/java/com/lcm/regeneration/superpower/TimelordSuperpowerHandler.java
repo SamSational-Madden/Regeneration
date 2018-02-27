@@ -1,8 +1,13 @@
 package com.lcm.regeneration.superpower;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
 import com.lcm.regeneration.RegenConfig;
 import com.lcm.regeneration.traits.negative.INegativeTrait;
 import com.lcm.regeneration.util.PlayerUtils;
+
 import lucraft.mods.lucraftcore.LCConfig;
 import lucraft.mods.lucraftcore.karma.KarmaHandler;
 import lucraft.mods.lucraftcore.karma.KarmaStat;
@@ -24,10 +29,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 /** Created by AFlyingGrayson on 8/7/17 */
 @Mod.EventBusSubscriber
@@ -72,7 +73,7 @@ public class TimelordSuperpowerHandler extends SuperpowerPlayerHandler {
 				regenTicks = 0;
 				if (regenerationsLeft != -1) regenerationsLeft--;
 				timesRegenerated++;
-				TimelordSuperpowerHandler.randomizeTraits(this);
+				TimelordSuperpowerHandler.randomize(this);
 				cap.syncToAll();
 			} else if (regenTicks == 0 && regenerating) regenTicks = 1; //initiate regeneration
 		} else {
@@ -100,18 +101,21 @@ public class TimelordSuperpowerHandler extends SuperpowerPlayerHandler {
 	public void onApplyPower() {
 		this.getAbilities().clear();
 		TimelordSuperpower.INSTANCE.addDefaultAbilities(this.getPlayer(), this.getAbilities());
-		TimelordSuperpowerHandler.randomizeTraits(this);
+		TimelordSuperpowerHandler.randomize(this);
 		this.regenerationsLeft = 0;
 		SuperpowerHandler.syncToAll(this.getPlayer());
 	}
 	
-	private static void randomizeTraits(TimelordSuperpowerHandler handler) {
+	public static void randomize(TimelordSuperpowerHandler handler) {
 		try {
 			handler.skin = new TimelordSkin();
 		} catch (IOException e) {
 			//STUB empty catch block
 			e.printStackTrace();
+			for (int i=0; i<20; i++) System.out.println();
 		}
+		
+		((TimelordRenderHandler)handler.superpower.getPlayerRenderer()).resetSkin(handler.getPlayer().getGameProfile().getId());
 		
 		//Reset Karma
 		if (LCConfig.modules.karma) for (KarmaStat karmaStat : KarmaStat.getKarmaStats())

@@ -51,13 +51,19 @@ public class TimelordRenderHandler implements SuperpowerRenderer.ISuperpowerRend
 		LimbManipulationUtil.getLimbManipulator(playerModelSmallArms, LimbManipulationUtil.Limb.HEAD).setAngles(-20, 0, 0);
 	}
 	
+	public void resetSkin(UUID id) {
+		skins.remove(id);
+	}
+	
 	@Override
 	public void onRenderPlayer(RenderLivingBase<?> renderLivingBase, Minecraft minecraft, EntityPlayer entityPlayer, Superpower superpower, SuperpowerPlayerHandler superpowerPlayerHandler, float v, float v1, float v2, float v3, float v4, float v5, float v6) {
 		TimelordSuperpowerHandler handler = (TimelordSuperpowerHandler) superpowerPlayerHandler;
-
+		
 		if (skins.containsKey(entityPlayer.getGameProfile().getId())) {
+			System.out.println("Re-using cache");
 			PlayerUtils.setPlayerTexture((AbstractClientPlayer)entityPlayer, skins.get(entityPlayer.getGameProfile().getId()));
 		} else {
+			System.out.println("Regenerating dyntex");
 			skins.put(entityPlayer.getGameProfile().getId(), generateSkin(handler.skin));
 		}
 		
