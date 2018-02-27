@@ -9,7 +9,12 @@ import javax.annotation.Generated;
 import javax.annotation.concurrent.Immutable;
 import javax.imageio.ImageIO;
 
+import com.lcm.regeneration.Regeneration;
+
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
+import scala.xml.MalformedAttributeException;
 
 @Immutable //technically not 100%, 'compiled' *could possibly* be modified
 public final class TimelordSkin {
@@ -26,19 +31,21 @@ public final class TimelordSkin {
 		hasHeterochemia = Math.random() < .3D;
 		
 		Random r = new Random();
-		iBeard		= r.nextInt(1);
-		iBrow		= r.nextInt(7);
-		iEyes		= r.nextInt(6);
-		iHair		= r.nextInt(11);
+		//iBeard	= r.nextInt(1);
+		iBeard		= 1;
+		iBrow		= r.nextInt(6)+1;
+		iEyes		= hasHeterochemia ? 0 : r.nextInt(5)+1;
+		iHair		= r.nextInt(10)+1;
 		hairColor	= HAIRCOLOR.values()[r.nextInt(HAIRCOLOR.values().length)];
-		iMouth		= r.nextInt(1);
-		iSkin		= r.nextInt(7);
-		iSpecial	= r.nextInt(2);
+		//iMouth	= r.nextInt(1);
+		iMouth		= 1;
+		iSkin		= r.nextInt(6)+1;
+		iSpecial	= r.nextInt(1)+1;
 		
 		compiled = compile();
 	}
 	
-		
+	
 	public enum HAIRCOLOR {
 		BLACK, DARKBLONDE, DARKBROWN, GINGER, GRAY, LIGHTBLONDE, LIGHTBROWN;
 		@Override public String toString() { return super.toString().toLowerCase(); }
@@ -65,6 +72,10 @@ public final class TimelordSkin {
 		iSkin		=	tag.getInteger("iSkin");
 		iSpecial	=	tag.getInteger("iSpecial");
 		
+		if (hasHeterochemia && iEyes != 0)
+			throw new MalformedAttributeException("Something went wrong while (de)serializing: hasHeterochemia but iEyes != 0");
+		if (iEyes == 0 && !hasHeterochemia)
+			throw new MalformedAttributeException("Something went wrong while (de)serializing: !hasHeterochemia but iEyes == 0");
 		compiled = compile();
 	}
 	
