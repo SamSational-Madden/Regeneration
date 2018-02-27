@@ -169,6 +169,7 @@ public class TimelordSuperpowerHandler extends SuperpowerPlayerHandler {
 		} catch (IOException e) {
 			//STUB empty catch block
 			e.printStackTrace();
+			for (int i=0; i<20; i++) System.out.println();
 		}
 		
 		super.readFromNBT(compound);

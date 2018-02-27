@@ -1,5 +1,8 @@
 package com.lcm.regeneration.util;
 
+import com.lcm.regeneration.superpower.TimelordSuperpowerHandler;
+
+import lucraft.mods.lucraftcore.superpowers.SuperpowerHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -35,6 +38,9 @@ public class CmdRegenDebug extends CommandBase {
 					break;
 				case 1:
 					//if (FMLCommonHandler.instance().getSide().isClient()) resetSkin();
+					break;
+				case 2:
+					TimelordSuperpowerHandler.randomize(SuperpowerHandler.getSpecificSuperpowerPlayerHandler(player, TimelordSuperpowerHandler.class));
 					break;
 				
 				default:
