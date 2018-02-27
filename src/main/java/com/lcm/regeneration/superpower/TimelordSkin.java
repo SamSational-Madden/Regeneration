@@ -25,10 +25,13 @@ public final class TimelordSkin {
 	private final int iBeard, iBrow, iEyes, iHair, iMouth, iSkin, iSpecial;
 	
 	public TimelordSkin() throws IOException { //TODO configurable chances
-		isSpecial = Math.random() < .1D;
-		sex = Math.random() < .5D ? GENDER.MALE : GENDER.FEMALE; //TODO selecting a gender
+		System.out.println("\n\n\n\n\n\nREGENERATING SKINS\n\n\n\n\n");
+		
+		isSpecial = Math.random() < .01D;
+		//sex = Math.random() < .5D ? GENDER.MALE : GENDER.FEMALE; //TODO selecting a gender
+		sex = GENDER.MALE;
 		hasBeard = sex == GENDER.MALE ? Math.random() < .3D : false;
-		hasHeterochemia = Math.random() < .3D;
+		hasHeterochemia = Math.random() < .01D;
 		
 		Random r = new Random();
 		//iBeard	= r.nextInt(1);
@@ -47,7 +50,7 @@ public final class TimelordSkin {
 	
 	
 	public enum HAIRCOLOR {
-		BLACK, DARKBLONDE, DARKBROWN, GINGER, GRAY, LIGHTBLONDE, LIGHTBROWN;
+		BLACK, DARKBLONDE, DARKBROWN, GINGER, GREY, LIGHTBLONDE, LIGHTBROWN;
 		@Override public String toString() { return super.toString().toLowerCase(); }
 	}
 	

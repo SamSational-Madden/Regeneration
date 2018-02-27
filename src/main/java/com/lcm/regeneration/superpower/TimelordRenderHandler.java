@@ -74,7 +74,7 @@ public class TimelordRenderHandler implements SuperpowerRenderer.ISuperpowerRend
 	private ResourceLocation generateSkin(TimelordSkin skin) {
 		return Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation("skin-"+skin.hashCode(), new DynamicTexture(skin.compiled));
 	}
-
+	
 	private void renderTexturedEffect(RenderLivingBase<?> renderLivingBase, Minecraft minecraft, EntityPlayer entityPlayer, Superpower superpower, SuperpowerPlayerHandler superpowerPlayerHandler, float v, float v1, float v2, float v3, float v4, float v5, float v6) {
 		
 		TimelordSuperpowerHandler handler = (TimelordSuperpowerHandler) superpowerPlayerHandler;
@@ -300,4 +300,5 @@ public class TimelordRenderHandler implements SuperpowerRenderer.ISuperpowerRend
 			LimbManipulationUtil.getLimbManipulator(e.getRenderer(), LimbManipulationUtil.Limb.HEAD).setAngles(-20, 0, 0);
 		}
 	}
+	
 }
