@@ -3,7 +3,8 @@ package com.lcm.regeneration.util;
 import com.lcm.regeneration.RegenConfig;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -20,8 +21,8 @@ public class ExplosionUtil {
 	
 	public static void explodeKnockback(Entity exploder, World world, BlockPos pos, float knockback, int range) {
 		world.getEntitiesWithinAABBExcludingEntity(exploder, getReach(pos, range)).forEach(entity -> {
-			if (!(entity instanceof EntityCreature) || exploder.isDead) return;
-			EntityCreature victim = (EntityCreature) entity;
+			if (!(entity instanceof EntityLiving || entity instanceof EntityPlayer) || exploder.isDead) return;
+			EntityLivingBase victim = (EntityLivingBase) entity;
 			float densMod = world.getBlockDensity(new Vec3d(pos), entity.getEntityBoundingBox());
 			
 			int xr, zr;
@@ -34,8 +35,8 @@ public class ExplosionUtil {
 	
 	public static void explodeKill(Entity exploder, World world, BlockPos pos, int range) {
 		world.getEntitiesWithinAABBExcludingEntity(exploder, getReach(pos, range)).forEach(entity -> {
-			if (!(entity instanceof EntityCreature) || !entity.isNonBoss()) return;
-			((EntityCreature) entity).attackEntityFrom(RegenerativeDamageSource.INSTANCE, Float.MAX_VALUE);
+			if (!(entity instanceof EntityLiving || entity instanceof EntityPlayer) || !entity.isNonBoss()) return;
+			((EntityLivingBase) entity).attackEntityFrom(RegenerativeDamageSource.INSTANCE, Float.MAX_VALUE);
 		});
 	}
 	
@@ -44,10 +45,7 @@ public class ExplosionUtil {
 	}
 	
 	public static class RegenerativeDamageSource extends DamageSource { // useful for future extension / add-on hooking
-		public static final DamageSource INSTANCE;
-		static {
-			INSTANCE = new RegenerativeDamageSource();
-		}
+		public static final DamageSource INSTANCE = new RegenerativeDamageSource();
 		
 		public RegenerativeDamageSource() {
 			super("regeneration");
