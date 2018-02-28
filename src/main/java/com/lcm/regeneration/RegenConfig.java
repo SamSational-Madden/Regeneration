@@ -1,11 +1,5 @@
 package com.lcm.regeneration;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-
-import net.minecraft.client.settings.GameSettings;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 
@@ -13,7 +7,6 @@ public class RegenConfig {
 	public static boolean disableTraits, lockMouse, resetHunger, resetOxygen, dontLoseUponDeath, startAsTimelord, disableArch;
 	public static int regenerativeKillRange, regenerativeKnockbackRange, regenCapacity, regenerationLevel, postRegenerationLevel, postRegenerationDuration;
 	public static float regenerativeKnockback, absorbtionLevel;
-	public static ArrayList<String> lockedKeys = new ArrayList<>();
 	public static String lootRegex;
 	
 	public static void init(Configuration cfg, Side side) {
@@ -39,19 +32,7 @@ public class RegenConfig {
 		regenerativeKnockbackRange = cfg.getInt("knockbackRange", "regeneration", 7, 0, 30000000, "Range wherein every mob is knocked back upon regeneration");
 		regenerativeKnockback = cfg.getFloat("knockback", "regeneration", 2.5F, 0, Float.MAX_VALUE, "The amount of knockback every mob inside of the knock back radius gets");
 		
-		if (side == Side.CLIENT) { // this information is not required on the server side as it can't lock keys
-			Collections.addAll(lockedKeys, cfg.getStringList("lockedActions", "keylocks", new String[] { "forward", "left", "right", "back", "jump", "sneak", "drop", "attack", "inventory", "sprint", "swapHands", "togglePerspective", "useItem" }, "When regenerating these keybindings are unbound", validKeybindings()));
-			lockMouse = cfg.getBoolean("lockMouse", "keylocks", true, "Lock the mouse while regenerating");
-			cfg.setCategoryComment("keylocks", "Actions that can be locked (case sensitive): " + Arrays.toString(validKeybindings()));
-		}
-		
 		cfg.save();
 	}
 	
-	private static String[] validKeybindings() {
-		ArrayList<String> kbs = new ArrayList<>();
-		for (Field f : GameSettings.class.getFields())
-			if (f.getName().startsWith("keyBind")) kbs.add(f.getName().substring(0, 1).toLowerCase() + f.getName().substring(1));
-		return kbs.toArray(new String[0]);
-	}
 }
