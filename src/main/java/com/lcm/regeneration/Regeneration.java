@@ -6,6 +6,7 @@ import java.util.Collections;
 
 import com.lcm.regeneration.init.RegenItems;
 import com.lcm.regeneration.superpower.TimelordSuperpower;
+import com.lcm.regeneration.superpower.TimelordSuperpower.TimelordInjection;
 import com.lcm.regeneration.traits.negative.*;
 import com.lcm.regeneration.traits.positive.*;
 import com.lcm.regeneration.util.CmdRegenDebug;
@@ -13,6 +14,7 @@ import com.lcm.regeneration.util.CmdRegenDebug;
 import lucraft.mods.lucraftcore.LCConfig;
 import lucraft.mods.lucraftcore.superpowers.Superpower;
 import lucraft.mods.lucraftcore.superpowers.abilities.Ability;
+import lucraft.mods.lucraftcore.utilities.items.ItemInjection;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -30,6 +32,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -44,6 +47,11 @@ public class Regeneration {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
 		RegenConfig.init(new Configuration(e.getSuggestedConfigurationFile()), e.getSide());
+	}
+	
+	@EventHandler
+	public void postInit(FMLPostInitializationEvent e) {
+		ItemInjection.registerInjection(new TimelordInjection(), TimelordSuperpower.INSTANCE.getRegistryName());
 	}
 	
 	@EventHandler

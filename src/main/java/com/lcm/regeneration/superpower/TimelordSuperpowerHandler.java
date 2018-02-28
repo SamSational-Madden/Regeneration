@@ -11,7 +11,6 @@ import lucraft.mods.lucraftcore.LCConfig;
 import lucraft.mods.lucraftcore.karma.KarmaHandler;
 import lucraft.mods.lucraftcore.karma.KarmaStat;
 import lucraft.mods.lucraftcore.superpowers.Superpower;
-import lucraft.mods.lucraftcore.superpowers.SuperpowerHandler;
 import lucraft.mods.lucraftcore.superpowers.SuperpowerPlayerHandler;
 import lucraft.mods.lucraftcore.superpowers.abilities.Ability;
 import lucraft.mods.lucraftcore.superpowers.capabilities.CapabilitySuperpower;
@@ -96,7 +95,6 @@ public class TimelordSuperpowerHandler extends SuperpowerPlayerHandler {
 		TimelordSuperpower.INSTANCE.addDefaultAbilities(this.getPlayer(), this.getAbilities());
 		TimelordSuperpowerHandler.randomizeTraits(this);
 		this.regenerationsLeft = 0;
-		SuperpowerHandler.syncToAll(this.getPlayer());
 	}
 	
 	protected static void randomizeTraits(SuperpowerPlayerHandler handler) {

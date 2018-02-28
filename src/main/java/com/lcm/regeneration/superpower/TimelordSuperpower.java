@@ -1,8 +1,10 @@
 package com.lcm.regeneration.superpower;
 
+import java.awt.Color;
 import java.util.List;
 import java.util.UUID;
 
+import com.lcm.regeneration.RegenConfig;
 import com.lcm.regeneration.Regeneration;
 import com.lcm.regeneration.client.gui.GuiRegenCustomizer;
 import com.lcm.regeneration.client.gui.GuiTimelordPowerTab;
@@ -16,6 +18,7 @@ import lucraft.mods.lucraftcore.superpowers.SuperpowerPlayerHandler;
 import lucraft.mods.lucraftcore.superpowers.abilities.Ability;
 import lucraft.mods.lucraftcore.superpowers.capabilities.ISuperpowerCapability;
 import lucraft.mods.lucraftcore.superpowers.gui.GuiCustomizer;
+import lucraft.mods.lucraftcore.superpowers.items.SuperpowerItems.InjectionSuperpower;
 import lucraft.mods.lucraftcore.superpowers.render.SuperpowerRenderer;
 import lucraft.mods.lucraftcore.util.helper.StringHelper;
 import net.minecraft.client.Minecraft;
@@ -123,6 +126,28 @@ public class TimelordSuperpower extends Superpower {
 		nbt.setFloat("SecondaryBlue", 0.0f);
 		nbt.setBoolean("textured", false);
 		return nbt;
+	}
+	
+	@Override
+	public int getCapsuleColor() {
+		return Color.ORANGE.getRGB();
+	}
+	
+	public static class TimelordInjection extends InjectionSuperpower {
+		
+		public TimelordInjection() {
+			super(TimelordSuperpower.INSTANCE);
+		}
+		
+		@Override
+		public ItemStack inject(EntityPlayer player, ItemStack stack) {
+			super.inject(player, stack);
+			TimelordSuperpowerHandler handler = SuperpowerHandler.getSpecificSuperpowerPlayerHandler(player, TimelordSuperpowerHandler.class);
+			if (handler != null) handler.regenerationsLeft = RegenConfig.regenCapacity;
+			SuperpowerHandler.syncToAll(handler.getPlayer());
+			return stack;
+		}
+		
 	}
 	
 }
