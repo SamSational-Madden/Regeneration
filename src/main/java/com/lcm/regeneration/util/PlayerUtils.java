@@ -5,8 +5,8 @@ import net.minecraft.entity.player.PlayerCapabilities;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public class PlayerUtils {
-
-    public static void setWalkSpeed(EntityPlayerMP p, float speed) {
-        ReflectionHelper.setPrivateValue(PlayerCapabilities.class, p.capabilities, speed, 6);
-    }
+	
+	public static void setWalkSpeed(EntityPlayerMP p, float speed) {
+		ReflectionHelper.setPrivateValue(PlayerCapabilities.class, p.capabilities, speed, 6);
+	}
 }

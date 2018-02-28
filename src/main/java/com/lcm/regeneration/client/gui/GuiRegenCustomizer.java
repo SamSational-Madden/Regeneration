@@ -43,7 +43,7 @@ public class GuiRegenCustomizer extends GuiCustomizer implements GuiSlider.ISlid
 		
 		this.buttonList.add(new GuiButtonExt(0, i + 4, j + 167, 50, 18, StringHelper.translateToLocal("lucraftcore.info.save")));
 		this.buttonList.add(new GuiButtonExt(1, i + 202, j + 167, 50, 18, StringHelper.translateToLocal("gui.cancel")));
-		this.texturedButton = new GuiButton(2, i + this.xSize/2 - 25, j + 45, 50, 20, StringHelper.translateToLocal(""));
+		this.texturedButton = new GuiButton(2, i + this.xSize / 2 - 25, j + 45, 50, 20, StringHelper.translateToLocal(""));
 		this.buttonList.add(texturedButton);
 		
 		this.buttonList.add(new GuiColorSlider(6, i + 20, j + 90, 80, 20, StringHelper.translateToLocal("lucraftcore.info.red"), "", 0, 1, primaryRed, true, true, this));
@@ -73,15 +73,14 @@ public class GuiRegenCustomizer extends GuiCustomizer implements GuiSlider.ISlid
 		int i = (this.width - this.xSize) / 2;
 		int j = (this.height - this.ySize) / 2;
 		
-		if (SuperpowerHandler.getSuperpower(mc.player).getPlayerRenderer() != null)
-			SuperpowerHandler.getSuperpower(mc.player).getPlayerRenderer().applyColor();
+		if (SuperpowerHandler.getSuperpower(mc.player).getPlayerRenderer() != null) SuperpowerHandler.getSuperpower(mc.player).getPlayerRenderer().applyColor();
 		
 		mc.getTextureManager().bindTexture(GuiCustomizer.DEFAULT_TEX);
 		this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
 		
 		String name = StringHelper.translateToLocal("lcm-regen.info.textured");
 		int length = mc.fontRenderer.getStringWidth(name);
-		this.drawString(mc.fontRenderer, name, i + this.xSize/2 - length/2, j + 30, 0xffffff);
+		this.drawString(mc.fontRenderer, name, i + this.xSize / 2 - length / 2, j + 30, 0xffffff);
 		
 		this.texturedButton.displayString = (textured) ? "Yes" : "No";
 		

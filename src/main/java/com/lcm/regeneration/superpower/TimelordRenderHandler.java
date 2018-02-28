@@ -65,7 +65,7 @@ public class TimelordRenderHandler implements SuperpowerRenderer.ISuperpowerRend
 		
 		ModelBiped model = (ModelBiped) renderLivingBase.getMainModel();
 		
-		//State manager changes
+		// State manager changes
 		GlStateManager.pushAttrib();
 		GlStateManager.enableAlpha();
 		GlStateManager.enableBlend();
@@ -87,7 +87,7 @@ public class TimelordRenderHandler implements SuperpowerRenderer.ISuperpowerRend
 		GlStateManager.translate(0.0F, g, g);
 		GlStateManager.matrixMode(5888);
 		
-		//Render right cone
+		// Render right cone
 		GlStateManager.pushMatrix();
 		model.postRenderArm(0.0625F, EnumHandSide.RIGHT);
 		GlStateManager.translate(0f, -0.2f, 0f);
@@ -97,7 +97,7 @@ public class TimelordRenderHandler implements SuperpowerRenderer.ISuperpowerRend
 		renderTexturedCone(entityPlayer, secondaryScale, secondaryScale * 1.5f, secondaryColor);
 		GlStateManager.popMatrix();
 		
-		//Render left cone
+		// Render left cone
 		GlStateManager.pushMatrix();
 		model.postRenderArm(0.0625F, EnumHandSide.LEFT);
 		GlStateManager.translate(0f, -0.2f, 0f);
@@ -106,7 +106,7 @@ public class TimelordRenderHandler implements SuperpowerRenderer.ISuperpowerRend
 		renderTexturedCone(entityPlayer, secondaryScale, secondaryScale * 1.5f, secondaryColor);
 		GlStateManager.popMatrix();
 		
-		//Render head cone
+		// Render head cone
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0f, 0.3f, 0f);
 		GlStateManager.rotate(180, 1.0f, 0.0f, 0.0f);
@@ -115,13 +115,13 @@ public class TimelordRenderHandler implements SuperpowerRenderer.ISuperpowerRend
 		renderTexturedCone(entityPlayer, secondaryScale, secondaryScale * 2f, secondaryColor);
 		GlStateManager.popMatrix();
 		
-		//Check which slightly larger model to use
+		// Check which slightly larger model to use
 		ModelPlayer playerModel = ((AbstractClientPlayer) entityPlayer).getSkinType().equals("slim") ? playerModelSmallArms : playerModelLargeArms;
 		
-		//Copy model attributes from the real player model
+		// Copy model attributes from the real player model
 		playerModel.setModelAttributes(model);
 		
-		//Undo state manager changes
+		// Undo state manager changes
 		GlStateManager.depthMask(true);
 		GlStateManager.disableBlend();
 		GlStateManager.disableAlpha();
@@ -129,7 +129,7 @@ public class TimelordRenderHandler implements SuperpowerRenderer.ISuperpowerRend
 		GlStateManager.enableTexture2D();
 		GlStateManager.popAttrib();
 		
-		//Render glowing overlay
+		// Render glowing overlay
 		renderLivingBase.bindTexture(REGEN_TEXTURE);
 		
 		GlStateManager.matrixMode(5890);
@@ -195,7 +195,7 @@ public class TimelordRenderHandler implements SuperpowerRenderer.ISuperpowerRend
 		
 		ModelBiped model = (ModelBiped) renderLivingBase.getMainModel();
 		
-		//State manager changes
+		// State manager changes
 		GlStateManager.pushAttrib();
 		GlStateManager.disableTexture2D();
 		GlStateManager.enableAlpha();
@@ -210,7 +210,7 @@ public class TimelordRenderHandler implements SuperpowerRenderer.ISuperpowerRend
 		
 		float primaryScale = handler.regenTicks / 40f;
 		float secondaryScale = handler.regenTicks / 70f;
-		//Render right cone
+		// Render right cone
 		GlStateManager.pushMatrix();
 		model.postRenderArm(0.0625F, EnumHandSide.RIGHT);
 		GlStateManager.translate(0f, -0.2f, 0f);
@@ -218,7 +218,7 @@ public class TimelordRenderHandler implements SuperpowerRenderer.ISuperpowerRend
 		renderCone(entityPlayer, secondaryScale, secondaryScale * 1.5f, secondaryColor);
 		GlStateManager.popMatrix();
 		
-		//Render left cone
+		// Render left cone
 		GlStateManager.pushMatrix();
 		model.postRenderArm(0.0625F, EnumHandSide.LEFT);
 		GlStateManager.translate(0f, -0.2f, 0f);
@@ -226,7 +226,7 @@ public class TimelordRenderHandler implements SuperpowerRenderer.ISuperpowerRend
 		renderCone(entityPlayer, secondaryScale, secondaryScale * 1.5f, secondaryColor);
 		GlStateManager.popMatrix();
 		
-		//Render head cone
+		// Render head cone
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0f, 0.3f, 0f);
 		GlStateManager.rotate(180, 1.0f, 0.0f, 0.0f);
@@ -234,20 +234,20 @@ public class TimelordRenderHandler implements SuperpowerRenderer.ISuperpowerRend
 		renderCone(entityPlayer, secondaryScale, secondaryScale * 1.5f, secondaryColor);
 		GlStateManager.popMatrix();
 		
-		//Check which slightly larger model to use
+		// Check which slightly larger model to use
 		ModelPlayer playerModel = ((AbstractClientPlayer) entityPlayer).getSkinType().equals("slim") ? playerModelSmallArms : playerModelLargeArms;
 		
-		//Define which parts are glowing
+		// Define which parts are glowing
 		playerModel.bipedBody.isHidden = playerModel.bipedLeftLeg.isHidden = playerModel.bipedRightLeg.isHidden = playerModel.bipedBodyWear.isHidden = playerModel.bipedHeadwear.isHidden = playerModel.bipedLeftLegwear.isHidden = playerModel.bipedRightLegwear.isHidden = handler.regenTicks < 150;
 		
-		//Copy model attributes from the real player model
+		// Copy model attributes from the real player model
 		playerModel.setModelAttributes(model);
 		
-		//Render glowing overlay
+		// Render glowing overlay
 		GlStateManager.color(primaryColor.getRed(), primaryColor.getGreen(), primaryColor.getBlue(), 1);
 		playerModel.render(entityPlayer, v, v1, v3, v4, v5, v6);
 		
-		//Undo state manager changes
+		// Undo state manager changes
 		LCRenderHelper.restoreLightmapTextureCoords();
 		GlStateManager.depthMask(true);
 		GlStateManager.disableBlend();

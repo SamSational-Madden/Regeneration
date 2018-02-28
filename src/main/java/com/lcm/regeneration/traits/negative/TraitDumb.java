@@ -34,9 +34,7 @@ public class TraitDumb extends AbilityConstant implements INegativeTrait {
 		List<Ability> abilityList = SuperpowerHandler.getSuperpowerPlayerHandler(event.getEntityPlayer()).getAbilities();
 		if (abilityList == null) return;
 		
-		for (Ability ability : abilityList) if (ability instanceof TraitDumb && ability.isUnlocked()) {
-			event.getOrb().xpValue *= 0.5;
-		}
+		for (Ability ability : abilityList) if (ability instanceof TraitDumb && ability.isUnlocked()) event.getOrb().xpValue *= 0.5;
 	}
 	
 	@Override

@@ -24,14 +24,14 @@ public class GuiTimelordPowerTab extends GuiSuperpowerAbilities {
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
-
+		
 		int i = (this.width - this.xSize) / 2;
 		int j = (this.height - this.ySize) / 2;
 		
 		if (RegenConfig.disableTraits) {
 			String txtDisabled = StringHelper.translateToLocal("lcm-regen.messages.traitsDisabled");
 			int xDisabled = this.xSize / 2 - mc.fontRenderer.getStringWidth(txtDisabled) / 2;
-			mc.fontRenderer.drawString(TextFormatting.BOLD.toString() + TextFormatting.RED + txtDisabled, i + xDisabled, j + ySize/2, 0x373737);
+			mc.fontRenderer.drawString(TextFormatting.BOLD.toString() + TextFormatting.RED + txtDisabled, i + xDisabled, j + ySize / 2, 0x373737);
 		}
 		
 		TimelordSuperpowerHandler handler = SuperpowerHandler.getSpecificSuperpowerPlayerHandler(player, TimelordSuperpowerHandler.class);

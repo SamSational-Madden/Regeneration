@@ -34,9 +34,7 @@ public class TraitObvious extends AbilityConstant implements INegativeTrait {
 		List<Ability> abilityList = SuperpowerHandler.getSuperpowerPlayerHandler(event.getEntityPlayer()).getAbilities();
 		if (abilityList == null) return;
 		
-		for (Ability ability : abilityList)	if (ability instanceof TraitObvious && ability.isUnlocked()) {
-			event.modifyVisibility(2);
-		}
+		for (Ability ability : abilityList)	if (ability instanceof TraitObvious && ability.isUnlocked()) event.modifyVisibility(2);
 	}
 	
 	@Override

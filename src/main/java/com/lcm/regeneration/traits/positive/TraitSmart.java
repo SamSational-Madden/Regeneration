@@ -33,9 +33,7 @@ public class TraitSmart extends AbilityConstant {
 		List<Ability> abilityList = SuperpowerHandler.getSuperpowerPlayerHandler(event.getEntityPlayer()).getAbilities();
 		if (abilityList == null) return;
 		
-		for (Ability ability : abilityList) if (ability instanceof TraitSmart && ability.isUnlocked()) {
-			event.getOrb().xpValue *= 1.5;
-		}
+		for (Ability ability : abilityList) if (ability instanceof TraitSmart && ability.isUnlocked()) event.getOrb().xpValue *= 1.5;
 	}
 	
 	@Override

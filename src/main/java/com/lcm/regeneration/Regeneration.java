@@ -66,7 +66,7 @@ public class Regeneration {
 	}
 	
 	@SubscribeEvent
-	public static void registerLoot(LootTableLoadEvent e) { //TODO can this loot table actually be overriden in resource packs?
+	public static void registerLoot(LootTableLoadEvent e) { // TODO can this loot table actually be overriden in resource packs?
 		if (!e.getName().toString().toLowerCase().matches(RegenConfig.lootRegex) || RegenConfig.disableArch) return;
 		
 		LootCondition[] condAlways = new LootCondition[] { new RandomChance(1F) };
@@ -80,7 +80,7 @@ public class Regeneration {
 		ArrayList<String> disabler = new ArrayList<>();
 		Collections.addAll(disabler, LCConfig.superpowers.disabledAbilities);
 		
-		//Positive
+		// Positive
 		registerAbility(e, TraitBouncy.class, "bouncy", disabler);
 		registerAbility(e, TraitLucky.class, "lucky", disabler);
 		registerAbility(e, TraitQuick.class, "quick", disabler);
@@ -92,7 +92,7 @@ public class Regeneration {
 		registerAbility(e, TraitSmart.class, "smart", disabler);
 		registerAbility(e, TraitSneaky.class, "sneaky", disabler);
 		
-		//Negative
+		// Negative
 		registerAbility(e, TraitClumsy.class, "clumsy", disabler);
 		registerAbility(e, TraitFlimsy.class, "flimsy", disabler);
 		registerAbility(e, TraitFrail.class, "frail", disabler);

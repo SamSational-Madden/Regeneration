@@ -44,28 +44,27 @@ public class TimelordSuperpowerHandler extends SuperpowerPlayerHandler {
 		if (phase.equals(TickEvent.Phase.END)) return;
 		
 		EntityPlayer player = cap.getPlayer();
-
+		
 		if (!player.world.isRemote) {
-			//Server Behavior
-			if (regenTicks > 0 && regenTicks < 200) { //regenerating
+			// Server Behavior
+			if (regenTicks > 0 && regenTicks < 200) { // regenerating
 				regenTicks++;
 				player.extinguish();
 				player.setArrowCountInEntity(0);
 				PlayerUtils.setWalkSpeed((EntityPlayerMP) player, 0f);
-				if (regenTicks > 100) { //explosion phase
+				if (regenTicks > 100) { // explosion phase
 					if (player.world.getBlockState(player.getPosition()).getBlock() instanceof BlockFire) player.world.setBlockToAir(player.getPosition());
 					double x = player.posX + player.getRNG().nextGaussian() * 2;
 					double y = player.posY + 0.5 + player.getRNG().nextGaussian() * 2;
 					double z = player.posZ + player.getRNG().nextGaussian() * 2;
 					
 					player.world.newExplosion(player, x, y, z, 1, true, false);
-					for (BlockPos bs : BlockPos.getAllInBox(player.getPosition().north().west(), player.getPosition().south().east())) {
+					for (BlockPos bs : BlockPos.getAllInBox(player.getPosition().north().west(), player.getPosition().south().east()))
 						if (player.world.getBlockState(bs).getBlock() instanceof BlockFire) player.world.setBlockToAir(bs);
-					}
 				}
-			} else if (regenTicks >= 200) { //end regeneration
+			} else if (regenTicks >= 200) { // end regeneration
 				player.setHealth(player.getMaxHealth());
-				player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, RegenConfig.postRegenerationDuration, RegenConfig.postRegenerationLevel, false, false)); //180 seconds of 20 ticks of Regeneration 4
+				player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, RegenConfig.postRegenerationDuration, RegenConfig.postRegenerationLevel, false, false)); // 180 seconds of 20 ticks of Regeneration 4
 				PlayerUtils.setWalkSpeed((EntityPlayerMP) player, 0.1F);
 				regenerating = false;
 				regenTicks = 0;
@@ -73,23 +72,19 @@ public class TimelordSuperpowerHandler extends SuperpowerPlayerHandler {
 				timesRegenerated++;
 				TimelordSuperpowerHandler.randomizeTraits(this);
 				cap.syncToAll();
-			} else if (regenTicks == 0 && regenerating) regenTicks = 1; //initiate regeneration
+			} else if (regenTicks == 0 && regenerating) regenTicks = 1; // initiate regeneration
 		} else {
-			//Client Behavior
-
-			if (regenTicks == 0 && regenerating) //initiate regeneration
+			// Client Behavior
+			if (regenTicks == 0 && regenerating) // initiate regeneration
 				regenTicks = 1;
-
-			if (regenTicks > 0) { //regenerating
-				if (Minecraft.getMinecraft().player.getUniqueID() == player.getUniqueID())
-					Minecraft.getMinecraft().gameSettings.thirdPersonView = 2;
+			
+			if (regenTicks > 0) { // regenerating
+				if (Minecraft.getMinecraft().player.getUniqueID() == player.getUniqueID()) Minecraft.getMinecraft().gameSettings.thirdPersonView = 2;
 				regenTicks++;
-
 			}
-
-			if (regenTicks >= 200 && !regenerating) { //end regeneration
-				if (Minecraft.getMinecraft().player.getUniqueID() == player.getUniqueID())
-					Minecraft.getMinecraft().gameSettings.thirdPersonView = 0;
+			
+			if (regenTicks >= 200 && !regenerating) { // end regeneration
+				if (Minecraft.getMinecraft().player.getUniqueID() == player.getUniqueID()) Minecraft.getMinecraft().gameSettings.thirdPersonView = 0;
 				regenTicks = 0;
 			}
 		}
@@ -105,7 +100,7 @@ public class TimelordSuperpowerHandler extends SuperpowerPlayerHandler {
 	}
 	
 	protected static void randomizeTraits(SuperpowerPlayerHandler handler) {
-		//Reset Karma
+		// Reset Karma
 		if (LCConfig.modules.karma) for (KarmaStat karmaStat : KarmaStat.getKarmaStats())
 			KarmaHandler.setKarmaStat(handler.getPlayer(), karmaStat, 0);
 		if (RegenConfig.disableTraits) return;
@@ -127,14 +122,11 @@ public class TimelordSuperpowerHandler extends SuperpowerPlayerHandler {
 		}
 		
 		String s = "";
-		for (Ability ability : handler.getAbilities()) {
-			if (ability.isUnlocked()) {
-				if (s.equals(""))
-					s = ability.getDisplayName().substring(7);
-				else
-					s = s + ", " + ability.getDisplayName().substring(7);
-			}
-		}
+		for (Ability ability : handler.getAbilities())
+			if (ability.isUnlocked()) if (s.equals(""))
+				s = ability.getDisplayName().substring(7);
+			else
+				s = s + ", " + ability.getDisplayName().substring(7);
 		handler.getPlayer().sendStatusMessage(new TextComponentString(StringHelper.translateToLocal("lcm-regen.messages.newLife", s)), true);
 	}
 	

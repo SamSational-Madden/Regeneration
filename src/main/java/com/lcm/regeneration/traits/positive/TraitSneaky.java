@@ -30,9 +30,7 @@ public class TraitSneaky extends AbilityConstant {
 		if (SuperpowerHandler.getSuperpowerPlayerHandler(event.getEntityPlayer()) == null) return;
 		List<Ability> abilityList = SuperpowerHandler.getSuperpowerPlayerHandler(event.getEntityPlayer()).getAbilities();
 		if (abilityList == null) return;
-		for (Ability ability : abilityList) if (ability instanceof TraitSneaky && ability.isUnlocked()) {
-			event.modifyVisibility(0.5);
-		}
+		for (Ability ability : abilityList) if (ability instanceof TraitSneaky && ability.isUnlocked()) event.modifyVisibility(0.5);
 	}
 	
 	@Override
