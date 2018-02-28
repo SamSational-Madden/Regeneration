@@ -35,8 +35,9 @@ public class ItemChameleonArch extends Item {
 		ItemStack arch = player.getHeldItem(hand);
 		SuperpowerPlayerHandler handler = SuperpowerHandler.getSuperpowerPlayerHandler(player);
 		
+		//Handle infinite regeneration case
 		if (RegenConfig.regenCapacity == 0) if (handler == null) {
-			SuperpowerHandler.setSuperpower(player, TimelordSuperpower.INSTANCE);
+			SuperpowerHandler.setSuperpower(player, TimelordSuperpower.INSTANCE); //TODO change to 'give' superpower?
 			SuperpowerHandler.getSpecificSuperpowerPlayerHandler(player, TimelordSuperpowerHandler.class).regenerationsLeft = -1;
 			player.sendStatusMessage(new TextComponentString(StringHelper.translateToLocal("lcm-regen.messages.becomeTimelord")), true);
 			return new ActionResult<>(EnumActionResult.PASS, arch);
@@ -47,7 +48,7 @@ public class ItemChameleonArch extends Item {
 		
 		if (handler == null) {
 			if (arch.getItemDamage() == RegenConfig.regenCapacity) {
-				player.sendStatusMessage(new TextComponentString(StringHelper.translateToLocal("lcm-regen.messages.emptyArch")), true);
+				player.sendStatusMessage(new TextComponentString(StringHelper.translateToLocal("lcm-regen.messages.transfer.emptyArch")), true);
 				return new ActionResult<>(EnumActionResult.FAIL, arch);
 			}
 			
