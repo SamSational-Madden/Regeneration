@@ -1,8 +1,12 @@
 package com.lcm.regeneration.superpower;
 
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
 import com.lcm.regeneration.RegenConfig;
 import com.lcm.regeneration.traits.negative.INegativeTrait;
 import com.lcm.regeneration.util.PlayerUtils;
+
 import lucraft.mods.lucraftcore.LCConfig;
 import lucraft.mods.lucraftcore.karma.KarmaHandler;
 import lucraft.mods.lucraftcore.karma.KarmaStat;
@@ -24,9 +28,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-
-import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 /** Created by AFlyingGrayson on 8/7/17 */
 @Mod.EventBusSubscriber
@@ -145,11 +146,11 @@ public class TimelordSuperpowerHandler extends SuperpowerPlayerHandler {
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-		compound = super.writeToNBT(compound);
-		compound.setInteger("regenerationsLeft", regenerationsLeft);
-		compound.setInteger("timesRegenerated", timesRegenerated);
-		compound.setBoolean("regenerating", regenerating);
-		return compound;
+		NBTTagCompound nbt = super.writeToNBT(compound);
+		nbt.setInteger("regenerationsLeft", regenerationsLeft);
+		nbt.setInteger("timesRegenerated", timesRegenerated);
+		nbt.setBoolean("regenerating", regenerating);
+		return nbt;
 	}
 	
 	@Override

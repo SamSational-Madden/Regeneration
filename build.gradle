@@ -35,7 +35,7 @@ repositories {
 }
 
 dependencies {
-	deobfCompile ('org.bitbucket.Lucraft:lucraftcore:2.0.5') {
+	deobfCompile ('com.gitlab.lcoremodders:LucraftCore:1.12-2.0-SNAPSHOT') {
 		exclude group: 'slimeknights.mantle'
 		exclude group: 'slimeknights'
 		exclude group: 'cofh'
